@@ -8,6 +8,7 @@ export class TasksService {
     private tasks: Task[] = [];
     
     getAllTasks(): Task[] {
+        console.log(process.env.DATABASE_PORT)
         return this.tasks;
     }
 
