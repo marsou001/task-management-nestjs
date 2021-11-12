@@ -9,10 +9,10 @@ import { TasksService } from './tasks.service';
 export class TasksController {
     constructor(private tasksService: TasksService) {}
 
-    // @Get()
-    // getAllTasks(): Task[] {
-    //     return this.tasksService.getAllTasks();
-    // }
+    @Get()
+    getTasks(): Promise<Task[]> {
+        return this.tasksService.getAllTasks();
+    }
 
     @Get(':id')
     getTaskById(@Param('id', ParseIntPipe) id: number): Promise<Task> {

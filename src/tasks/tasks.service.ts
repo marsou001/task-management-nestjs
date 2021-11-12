@@ -8,9 +8,9 @@ import { TaskRepository } from './task.repository';
 @Injectable()
 export class TasksService {
     constructor(@InjectRepository(TaskRepository) private taskRepository: TaskRepository) {}
-    // getAllTasks(): Task[] {
-    //     return this.tasks;
-    // }
+    async getAllTasks(): Promise<Task[]> {
+        return await this.taskRepository.find();
+    }
 
     async getTaskById(id: number): Promise<Task> {
         const task = await this.taskRepository.findOne(id);
