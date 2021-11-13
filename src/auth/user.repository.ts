@@ -1,4 +1,4 @@
-import { ConflictException, InternalServerErrorException } from "@nestjs/common";
+import { ConflictException, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { EntityRepository, Repository } from "typeorm";
 import * as bcrypt from 'bcrypt'
 import { AuthCredentialsDto } from "./dto/auth-credentials.dto";
@@ -24,6 +24,13 @@ export class UserRepository extends Repository<User> {
         }
 
         return user;
+    }
+
+    async validateUserPassword(authCredentialsDto: AuthCredentialsDto): Promise<string | null> {
+        const { username, password } = authCredentialsDto;
+        const user = await this.findOne({ username });
+
+        return (user && await user.validatePassword(password)) ? user.username : null;
     }
 
     private async hashPassword(password: string, salt: string): Promise<string> {
