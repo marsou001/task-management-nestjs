@@ -16,7 +16,9 @@ import { UserRepository } from './user.repository';
     }),
     JwtModule.registerAsync({
       useFactory: async (configService: ConfigService) => ({
+      // useFactory: async () => ({
         secret: configService.get<string>("SECRET_KEY"),
+        // secret: process.env.SECRET_KEY,
         signOptions: {
           expiresIn: 3600,
         }
